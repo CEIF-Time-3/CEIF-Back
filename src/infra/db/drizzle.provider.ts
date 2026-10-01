@@ -5,7 +5,6 @@ import { Pool } from 'pg';
 // 1. Classe que o NestJS usa como Token em tempo de execução
 export abstract class DrizzleDB {}
 
-
 export interface DrizzleDB extends NodePgDatabase {}
 
 export const drizzleProvider = {
