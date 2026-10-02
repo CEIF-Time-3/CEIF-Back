@@ -4,31 +4,31 @@ API RESTful desenvolvida para gerenciar o ecossistema completo de uma pastelaria
 
 O sistema centraliza o gerenciamento de **produtos**, **clientes**, **pedidos** e **pagamentos**, contemplando:
 
-* Cadastro de produtos, sabores, tamanhos e adicionais;
-* Cadastro e histórico de clientes;
-* Criação e gerenciamento de pedidos;
-* Alteração de status dos pedidos;
-* Cancelamento de pedidos;
-* Registro e gerenciamento de pagamentos;
-* Upload e armazenamento de imagens dos produtos.
+- Cadastro de produtos, sabores, tamanhos e adicionais;
+- Cadastro e histórico de clientes;
+- Criação e gerenciamento de pedidos;
+- Alteração de status dos pedidos;
+- Cancelamento de pedidos;
+- Registro e gerenciamento de pagamentos;
+- Upload e armazenamento de imagens dos produtos.
 
 ---
 
 ## Tecnologias Utilizadas
 
-* **NestJS** — Framework Node.js baseado em TypeScript, estruturado em uma arquitetura modular utilizando **Controller, Service e Repository**.
+- **NestJS** — Framework Node.js baseado em TypeScript, estruturado em uma arquitetura modular utilizando **Controller, Service e Repository**.
 
-* **Drizzle ORM** — ORM moderno, performático e fortemente tipado para interação com o banco de dados.
+- **Drizzle ORM** — ORM moderno, performático e fortemente tipado para interação com o banco de dados.
 
-* **PostgreSQL** — Banco de dados relacional utilizado para persistência das informações da aplicação.
+- **PostgreSQL** — Banco de dados relacional utilizado para persistência das informações da aplicação.
 
-* **Class-Validator / Class-Transformer** — Utilizados para validação, transformação e higienização dos dados recebidos através das requisições.
+- **Class-Validator / Class-Transformer** — Utilizados para validação, transformação e higienização dos dados recebidos através das requisições.
 
-* **Multer (`@nestjs/platform-express`)** — Middleware utilizado para captura e persistência das imagens dos produtos.
+- **Multer (`@nestjs/platform-express`)** — Middleware utilizado para captura e persistência das imagens dos produtos.
 
-* **Docker & Docker Compose** — Utilizados para containerização da aplicação e gerenciamento dos serviços necessários para sua execução.
+- **Docker & Docker Compose** — Utilizados para containerização da aplicação e gerenciamento dos serviços necessários para sua execução.
 
-* **Make** — Utilizado como camada de abstração dos comandos de execução e gerenciamento do ambiente, evitando a necessidade de memorizar comandos extensos do Docker e de outras ferramentas.
+- **Make** — Utilizado como camada de abstração dos comandos de execução e gerenciamento do ambiente, evitando a necessidade de memorizar comandos extensos do Docker e de outras ferramentas.
 
 ---
 
@@ -36,9 +36,9 @@ O sistema centraliza o gerenciamento de **produtos**, **clientes**, **pedidos** 
 
 Antes de iniciar o projeto, certifique-se de possuir as seguintes ferramentas instaladas:
 
-* [Docker](https://www.docker.com/)
-* Docker Compose
-* **Make**
+- [Docker](https://www.docker.com/)
+- Docker Compose
+- **Make**
 
 > O `Make` é utilizado pelo `Makefile` do projeto para abstrair os principais comandos necessários durante o desenvolvimento.
 >
@@ -81,7 +81,6 @@ cp .env-dev.example .env
 ```
 
 O arquivo `.env` deve conter as configurações necessárias para o ambiente escolhido.
-
 
 > As variáveis disponíveis podem variar conforme as necessidades da aplicação. Sempre utilize o arquivo `.env-dev.example` como referência para novas configurações.
 
@@ -172,15 +171,15 @@ docker-compose.prd.yml
 
 O ambiente de desenvolvimento utiliza:
 
-* Hot Reload;
-* Código fonte montado no container;
-* Configurações específicas para desenvolvimento.
+- Hot Reload;
+- Código fonte montado no container;
+- Configurações específicas para desenvolvimento.
 
 Enquanto o ambiente de produção utiliza:
 
-* Build otimizado;
-* Imagem compilada;
-* Configurações específicas para execução em produção.
+- Build otimizado;
+- Imagem compilada;
+- Configurações específicas para execução em produção.
 
 ---
 
@@ -196,11 +195,11 @@ make <comando>
 
 Entre as operações abstraídas pelo `Makefile`, estão as relacionadas a:
 
-* Inicialização dos containers;
-* Parada dos containers;
-* Rebuild das imagens;
-* Execução das migrações;
-* Outros comandos recorrentes do projeto.
+- Inicialização dos containers;
+- Parada dos containers;
+- Rebuild das imagens;
+- Execução das migrações;
+- Outros comandos recorrentes do projeto.
 
 Para consultar todos os comandos disponíveis:
 
@@ -225,6 +224,9 @@ make dev-up
 
 # 3. Executar as migrações
 make db-migrate
+
+# 4. Executar as seeds
+make db-seed
 ```
 
 Depois disso, valide a aplicação através de:

@@ -1,17 +1,22 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Body, Res } from '@nestjs/common';
 import { ProductsService } from './products.service.js';
+import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
+import { IProductDTO } from './DTO/product-dto.js';
+import { Result } from '../shared/types/result.js';
 
 @Controller()
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get('/products')
-  listProducts(): string {
-    return this.productsService.getProducts();
+  async listProducts(): Promise<Result<IProductDTO[], string>> {
+    return await this.productsService.getProducts();
   }
 
   @Post('/products')
-  create(): void {
-    console.log('aoba');
+  async create(
+    @Body() data: ProductCreateDto,
+  ): Promise<Result<string, string>> {
+    return await this.productsService.createProduct(data);
   }
 }

@@ -6,8 +6,15 @@ COPY package*.json ./
 # --- Stage Development ---
 FROM base AS development
 ENV NODE_ENV=development
+
+RUN chown -R node:node /app
+
 RUN npm install
+
 COPY . .
+
+RUN chown -R node:node /app
+
 CMD ["npm", "run", "start:dev"]
 
 # --- Stage Builder ---
