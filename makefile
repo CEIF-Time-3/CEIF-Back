@@ -19,13 +19,19 @@ logs-api-prod:
 	docker compose -f docker-compose.prod.yml logs -f api_prod
 # --- DRIZZLE ORM / BANCO DE DADOS ---
 db-generate:
-	npx drizzle-kit generate
+	docker exec -i api_dev npx drizzle-kit generate
 
 db-migrate:
-	npx drizzle-kit migrate
+	docker exec -i api_dev npx drizzle-kit migrate
 
 db-push:
-	npx drizzle-kit push
+	docker exec -i api_dev npx drizzle-kit push
 
 db-studio:
-	npx drizzle-kit studio
+	docker exec -i api_dev npx drizzle-kit studio
+
+db-check: 
+	docker exec -i api_dev npx drizzle-kit check
+
+db-seed: 
+	docker exec -it api_dev npm run db:seed
