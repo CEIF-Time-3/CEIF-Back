@@ -3,6 +3,7 @@ import { DrizzleDB } from '../../infra/db/drizzle.provider.js';
 import { products } from '../../infra/db/schema/products.schema.js';
 import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
 import { IProductDTO } from './DTO/product-dto.js';
+import { eq } from 'drizzle-orm';
 
 @Injectable()
 export class ProductRepository {
@@ -24,5 +25,9 @@ export class ProductRepository {
 
   async create(product: ProductCreateDto) {
     await this.db.insert(products).values(product);
+  }
+
+  async delete(id: string){
+    return await this.db.delete(products).where(eq(products.id, id)).returning()
   }
 }

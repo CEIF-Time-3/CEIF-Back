@@ -3,7 +3,7 @@ import { ProductRepository } from './products.repository.js';
 import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
 import { IProductDTO } from './DTO/product-dto.js';
 import { Result } from '../shared/types/result.js';
-import { CategoryProductAdapter } from '../Categories/Adapter/category-product.adapter.js';
+import { CategoryProductAdapter } from '../Categories/Adapter/category-product.adapter.js'; 
 
 @Injectable()
 export class ProductsService {
@@ -34,8 +34,6 @@ export class ProductsService {
         data.categoryId,
       );
 
-      console.log(categoryResult);
-
       if (!categoryResult.success) {
         return { success: false, message: 'Erro ao buscar categoria.' };
       }
@@ -49,6 +47,22 @@ export class ProductsService {
     } catch (error) {
       console.error(error);
       return { success: false, message: 'Erro interno no servidor' };
+    }
+  }
+
+  async deleteProduct(id: string): Promise<Result<string, string>>{
+    try{
+
+        const response = await this.productsRepository.delete(id)
+
+        if(response.length == 0){
+          return { success: false, message: 'Produto não encontrado'}
+        }
+
+        return { success: true, data: 'Produto deletado com sucesso'}
+    } catch(error){
+      console.error(error)
+      return {success: false, message: 'Erro interno no servidor'}
     }
   }
 }

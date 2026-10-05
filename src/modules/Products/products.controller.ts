@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Res, Delete, Param } from '@nestjs/common';
 import { ProductsService } from './products.service.js';
 import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
 import { IProductDTO } from './DTO/product-dto.js';
@@ -18,5 +18,12 @@ export class ProductsController {
     @Body() data: ProductCreateDto,
   ): Promise<Result<string, string>> {
     return await this.productsService.createProduct(data);
+  }
+
+  @Delete('/products/:id')
+  async delete(
+    @Param('id') id: string
+  ): Promise<Result<string, string>> {
+    return await this.productsService.deleteProduct(id)
   }
 }
