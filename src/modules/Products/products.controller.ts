@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Res, Delete, Param } from '@nestjs/common'
 import { ProductsService } from './products.service.js';
 import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
 import { IProductDTO } from './DTO/product-dto.js';
-import { Result } from '../shared/types/result.js';
+import { Result } from '../../shared/types/result.js';
 
 @Controller()
 export class ProductsController {

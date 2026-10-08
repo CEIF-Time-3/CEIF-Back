@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CategoriesRepository } from './categories.repository.js';
 import { ICategoryDTO } from './DTO/category-dto.js';
-import { Result } from '../shared/types/result.js';
+import { Result } from '../../shared/types/result.js';
 import { CategoryCreateDto } from './DTO/category-create-validation.js';
 
 @Injectable()

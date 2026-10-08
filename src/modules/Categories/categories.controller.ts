@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CategoriesService } from './categories.service.js';
 import { ICategoryDTO } from './DTO/category-dto.js';
-import { Result } from '../shared/types/result.js';
+import { Result } from '../../shared/types/result.js';
 import { CategoryCreateDto } from './DTO/category-create-validation.js';
 
 @Controller()
