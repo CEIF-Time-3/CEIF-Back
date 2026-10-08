@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ProductRepository } from './products.repository.js';
 import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
 import { IProductDTO } from './DTO/product-dto.js';
-import { Result } from '../shared/types/result.js';
-import { CategoryProductAdapter } from '../Categories/Adapter/category-product.adapter.js'; 
+import { Result } from '../../shared/types/result.js';
+import { CategoryProductAdapter } from '../Categories/Adapter/category-product.adapter.js';
 
 @Injectable()
 export class ProductsService {

@@ -37,17 +37,15 @@ export class ResultInterceptor implements NestInterceptor {
           data: data,
         };
       }),
-      catchError((error) => {
-        const status = error instanceof HttpException ? error.getStatus() : 500;
-        const responseError =
-          error instanceof HttpException ? error.getResponse() : error.message;
-
-        const message =
-          typeof responseError === 'object' &&
-          responseError !== null &&
-          'message' in responseError
-            ? (responseError as any).message
-            : responseError;
+      
+    
+        catchError((error) => {
+        
+        if (error instanceof HttpException) {
+          return throwError(() => error);
+        }
+        const status = 500;
+        const message = error?.message || 'Internal server error';
 
         response.status(status);
         return throwError(() => ({
