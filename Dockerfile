@@ -1,35 +1,26 @@
-# --- Stage Base ---
+# --- Estágio Base ---
 FROM node:20-alpine AS base
 WORKDIR /app
+
+# --- Estágio Builder (Copia tudo e instala as dependências uma única vez) ---
+FROM base AS builder
 COPY package*.json ./
-
-# --- Stage Development ---
-FROM base AS development
-ENV NODE_ENV=development
-
-RUN chown -R node:node /app
-
 RUN npm install
-
 COPY . .
 
+# --- Estágio Development (Apenas muda a execução) ---
+FROM builder AS development
+ENV NODE_ENV=development
+# Garante as permissões corretas para o usuário node
 RUN chown -R node:node /app
-
+USER node
 CMD ["npm", "run", "start:dev"]
 
-# --- Stage Builder ---
-FROM base AS builder
-RUN npm install
-COPY . .
-RUN npm run build
-
-# --- Stage Production ---
-FROM node:20-alpine AS production
+# --- Estágio Production (Gera o build e muda a execução) ---
+FROM builder AS production
 ENV NODE_ENV=production
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY --from=builder /app/dist ./dist
-
-EXPOSE 3000
-CMD ["node", "dist/main.js"]
+RUN npm run build
+# Garante as permissões corretas para o usuário node
+RUN chown -R node:node /app
+USER node
+CMD ["npm", "run", "start:prod"]
