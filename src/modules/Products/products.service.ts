@@ -53,16 +53,31 @@ export class ProductsService {
   async deleteProduct(id: string): Promise<Result<string, string>>{
     try{
 
-        const response = await this.productsRepository.delete(id)
+      const deletedProduct = await this.productsRepository.delete(id)
 
-        if(response.length == 0){
-          return { success: false, message: 'Produto não encontrado'}
-        }
+      if(!deletedProduct){
+        return { success: false, message: 'Produto não encontrado'}
+      }
 
-        return { success: true, data: 'Produto deletado com sucesso'}
+      return { success: true, data: 'Produto deletado com sucesso'}
     } catch(error){
       console.error(error)
       return {success: false, message: 'Erro interno no servidor'}
+    }
+  }
+
+  async updateProduct(id: string, data: ProductCreateDto): Promise<Result<string, string>>{
+    try {
+      const updatedProduct = await this.productsRepository.update(id, data)
+
+      if(!updatedProduct){
+        return { success: false, message: 'Produto não encontrado'}
+      }
+
+      return { success: true, data: 'Produto atualizado com sucesso'}
+    } catch(error){
+      console.error(error)
+      return { success: false, message: 'Erro interno no servidor' }
     }
   }
 }
