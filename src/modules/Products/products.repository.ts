@@ -28,6 +28,12 @@ export class ProductRepository {
   }
 
   async delete(id: string){
-    return await this.db.delete(products).where(eq(products.id, id)).returning()
+    const [deletedProduct] = await this.db.delete(products).where(eq(products.id, id)).returning()
+    return deletedProduct
+  }
+
+  async update(id: string, product: ProductCreateDto){
+    const [updatedProduct] = await this.db.update(products).set(product).where(eq(products.id, id)).returning()
+    return updatedProduct
   }
 }
