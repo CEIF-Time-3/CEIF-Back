@@ -4,6 +4,7 @@ import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
 import { IProductDTO } from './DTO/product-dto.js';
 import { Result } from '../../shared/types/result.js';
 import { CategoryProductAdapter } from '../Categories/Adapter/category-product.adapter.js';
+import { ProductCollection } from './Iterator/product.collection.js';
 
 @Injectable()
 export class ProductsService {
@@ -15,13 +16,24 @@ export class ProductsService {
 
   async getProducts(): Promise<Result<IProductDTO[], string>> {
     try {
-      const products = await this.productsRepository.findAll();
+      const rawProducts = await this.productsRepository.findAll();
 
-      if (!products) {
+      if (!rawProducts) {
         return { success: false, message: 'Produtos não encontrados' };
       }
 
-      return { success: true, data: products };
+      const productCollection = new ProductCollection(rawProducts);
+
+      const iterator = productCollection.createIterator();
+
+      const processedProducts: IProductDTO[] = [];
+
+      while (iterator.hasNext()) {
+        const product = iterator.next();
+        processedProducts.push(product);
+      }
+
+      return { success: true, data: processedProducts };
     } catch (error) {
       console.error(error);
       return { success: false, message: 'Erro interno no servidor' };
@@ -50,19 +62,18 @@ export class ProductsService {
     }
   }
 
-  async deleteProduct(id: string): Promise<Result<string, string>>{
-    try{
+  async deleteProduct(id: string): Promise<Result<string, string>> {
+    try {
+      const response = await this.productsRepository.delete(id);
 
-        const response = await this.productsRepository.delete(id)
+      if (response.length == 0) {
+        return { success: false, message: 'Produto não encontrado' };
+      }
 
-        if(response.length == 0){
-          return { success: false, message: 'Produto não encontrado'}
-        }
-
-        return { success: true, data: 'Produto deletado com sucesso'}
-    } catch(error){
-      console.error(error)
-      return {success: false, message: 'Erro interno no servidor'}
+      return { success: true, data: 'Produto deletado com sucesso' };
+    } catch (error) {
+      console.error(error);
+      return { success: false, message: 'Erro interno no servidor' };
     }
   }
 }
