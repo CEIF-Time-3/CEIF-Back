@@ -27,13 +27,21 @@ export class ProductRepository {
     await this.db.insert(products).values(product);
   }
 
-  async delete(id: string){
-    const [deletedProduct] = await this.db.delete(products).where(eq(products.id, id)).returning()
-    return deletedProduct
+  async delete(id: string) {
+    const [deletedProduct] = await this.db
+      .delete(products)
+      .where(eq(products.id, id))
+      .returning();
+
+    return deletedProduct;
   }
 
-  async update(id: string, product: ProductCreateDto){
-    const [updatedProduct] = await this.db.update(products).set(product).where(eq(products.id, id)).returning()
-    return updatedProduct
+  async update(id: string, product: ProductCreateDto) {
+    const [updatedProduct] = await this.db
+      .update(products)
+      .set(product)
+      .where(eq(products.id, id))
+      .returning();
+    return updatedProduct;
   }
 }
