@@ -1,5 +1,5 @@
-import { UserAddressResult } from "../Adapter/addressPort.js";
-import { UserRole } from "../schema/users.schema.js";
+import { UserAddressResult } from '../Adapter/addressPort.js';
+import { UserRole } from '../schema/users.schema.js';
 
 export interface UserResponseDto {
   id: string;
@@ -11,8 +11,8 @@ export interface UserResponseDto {
   createdAt: Date;
   addresses: UserAddressResult[];
 }
-export interface PublicUserResopnseDTO{
-    name: string;
+export interface PublicUserResopnseDTO {
+  name: string;
   email: string;
   phone: string | null;
 }
