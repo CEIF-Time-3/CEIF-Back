@@ -17,6 +17,7 @@ logs-api-dev:
 	docker compose -f docker-compose.dev.yml logs -f api_dev
 logs-api-prod:
 	docker compose -f docker-compose.prod.yml logs -f api_prod
+	
 # --- DRIZZLE ORM / BANCO DE DADOS ---
 db-generate:
 	docker exec -i api_dev npx drizzle-kit generate
