@@ -1,9 +1,7 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
 import { categories } from '../schema/categories.schema.js';
+import { DrizzleDB } from '../drizzle.provider.js';
 
-export async function seedCategories() {
-  const db = drizzle(process.env.DATABASE_URL!);
-
+export async function seedCategories(db: DrizzleDB) {
   console.log('🌱 Populando categorias...');
 
   const categoryList = [

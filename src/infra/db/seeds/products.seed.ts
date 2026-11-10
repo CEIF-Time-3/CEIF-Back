@@ -2,10 +2,9 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { products } from '../schema/products.schema.js';
 import { categories } from '../schema/categories.schema.js';
 import { ProductCreateDto } from '../../../modules/Products/DTO/products-create-validation.dto.js';
+import { DrizzleDB } from '../drizzle.provider.js';
 
-export async function seedProducts() {
-  const db = drizzle(process.env.DATABASE_URL!);
-
+export async function seedProducts(db: DrizzleDB) {
   console.log('🌱 Populando produtos...');
 
   const allCategories = await db.select().from(categories);

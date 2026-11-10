@@ -1,12 +1,8 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
 import { addresses } from '../schema/address.schema.js';
 import { users } from '../schema/users.schema.js';
+import { DrizzleDB } from '../drizzle.provider.js';
 
-export async function seedAddresses() {
-  const db = drizzle(process.env.DATABASE_URL!);
-
-  console.log('🌱 Populando endereços...');
-
+export async function seedAddresses(db: DrizzleDB) {
   const allUsers = await db.select().from(users);
 
   if (allUsers.length === 0) {
@@ -15,7 +11,6 @@ export async function seedAddresses() {
     );
     return;
   }
-
 
   const userMap = new Map(allUsers.map((user) => [user.email, user.id]));
 
