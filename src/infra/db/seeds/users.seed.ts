@@ -1,9 +1,7 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
 import { users } from '../schema/users.schema.js';
+import { DrizzleDB } from '../drizzle.provider.js';
 
-export async function seedUsers() {
-  const db = drizzle(process.env.DATABASE_URL!);
-
+export async function seedUsers(db: DrizzleDB) {
   console.log('🌱 Populando usuários...');
 
   const usersList = [

@@ -12,7 +12,10 @@ export const drizzleProvider = {
   inject: [ConfigService],
   useFactory: (configService: ConfigService) => {
     const connectionString = configService.get('DATABASE_URL');
-    const pool = new Pool({ connectionString });
+    const pool = new Pool({
+      connectionString,
+      ssl: { rejectUnauthorized: false },
+    });
     return drizzle(pool);
   },
 };
