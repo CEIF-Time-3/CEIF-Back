@@ -9,6 +9,15 @@ import { ApiExceptionFilter } from './shared/http/api-expection-filter.js';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://ceif-develop-app.onrender.com',
+    ],
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  });
+
   app.useGlobalInterceptors(new ResultInterceptor());
   app.useGlobalFilters(new ApiExceptionFilter());
   app.useGlobalPipes(
