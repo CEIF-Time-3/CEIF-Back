@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Res, Delete, Param, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Param, Put, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ProductsService } from './products.service.js';
 import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
 import { IProductDTO, ProductDTO } from './DTO/product-dto.js';
 import { Result } from '../../shared/types/result.js';
+import { Roles } from '../../common/decorators/roles.decorator.js';
+import { RolesGuard } from '../../common/guards/roles.guard.js';
 
 type product = {
    id: string;
@@ -24,6 +27,8 @@ export class ProductsController {
   }
 
   @Post('/products')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles('admin')
   async create(
     @Body() data: ProductCreateDto,
   ): Promise<Result<string, string>> {
@@ -31,6 +36,8 @@ export class ProductsController {
   }
 
   @Delete('/products/:id')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles('admin')
   async delete(
     @Param('id') id: string
   ): Promise<Result<string, string>> {
@@ -38,6 +45,8 @@ export class ProductsController {
   }
 
   @Put('/products/:id')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles('admin')
   async update(
     @Param('id') id: string,
     @Body() data: ProductDTO,

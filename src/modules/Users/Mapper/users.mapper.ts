@@ -2,16 +2,23 @@ import { CreateUserDto } from "../DTO/create-user.dto.js";
 import { PublicUserResopnseDTO, UserResponseDto } from "../DTO/user-response.dto.js";
 import { UserRole } from "../schema/users.schema.js";
 import { NewUserRow, UserWithAddresses } from "../types/users.types.js";
+import * as bcrypt from 'bcrypt';
+
 // users/mappers/user.mapper.ts
 export class UserMapper {
   // HTTP -> persistência
   static toEntity(
-    dto: Pick<CreateUserDto, 'name' | 'email' | 'phone'>,
+    dto: Pick<CreateUserDto, 'name' | 'email' | 'phone' | 'password'>,
     role?: UserRole,                       // já autorizado pelo service
   ): NewUserRow {
+    const password = dto.password.startsWith('$2b$')
+      ? dto.password
+      : bcrypt.hashSync(dto.password, 10);
+
     return {
       name: dto.name,
       email: dto.email,
+      password,
       phone: dto.phone,
       ...(role !== undefined && { role }), // sem role: a chave nem existe no objeto
     };
