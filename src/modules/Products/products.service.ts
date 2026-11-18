@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ProductRepository } from './products.repository.js';
 import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
-import { IProductDTO, ProductDTO } from './DTO/product-dto.js';
+import { IProductDTO, ProductDTO, ProductWithCategoryDTO } from './DTO/product-dto.js';
 import { Result } from '../../shared/types/result.js';
 import { CategoryProductAdapter } from '../Categories/Adapter/category-product.adapter.js';
 import { ProductCollection } from './Iterator/product.collection.js';
@@ -34,6 +34,21 @@ export class ProductsService {
       }
 
       return { success: true, data: processedProducts };
+    } catch (error) {
+      console.error(error);
+      return { success: false, message: 'Erro interno no servidor' };
+    }
+  }
+
+  async getProductsWithCategory(): Promise<Result<ProductWithCategoryDTO[], string>> {
+    try {
+      const productsWithCategory = await this.productsRepository.productsWithCategory();
+
+      if (!productsWithCategory || productsWithCategory.length === 0) {
+        return { success: false, message: 'Produtos com categoria não encontrados' };
+      }
+
+      return { success: true, data: productsWithCategory };
     } catch (error) {
       console.error(error);
       return { success: false, message: 'Erro interno no servidor' };
