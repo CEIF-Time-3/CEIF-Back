@@ -17,6 +17,16 @@ type product = {
   ingredients: string | null;
 }
 
+type product = {
+   id: string;
+  name: string;
+  price: string;
+  imageUrl: string | null;
+  description: string | null;
+  available: boolean;
+  ingredients: string | null;
+}
+
 @Controller()
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
