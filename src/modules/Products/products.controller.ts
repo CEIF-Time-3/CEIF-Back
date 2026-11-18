@@ -1,8 +1,18 @@
 import { Controller, Get, Post, Body, Res, Delete, Param, Put } from '@nestjs/common';
 import { ProductsService } from './products.service.js';
 import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
-import { IProductDTO } from './DTO/product-dto.js';
+import { IProductDTO, ProductDTO } from './DTO/product-dto.js';
 import { Result } from '../../shared/types/result.js';
+
+type product = {
+   id: string;
+  name: string;
+  price: string;
+  imageUrl: string | null;
+  description: string | null;
+  available: boolean;
+  ingredients: string | null;
+}
 
 @Controller()
 export class ProductsController {
@@ -30,7 +40,7 @@ export class ProductsController {
   @Put('/products/:id')
   async update(
     @Param('id') id: string,
-    @Body() data: ProductCreateDto,
+    @Body() data: ProductDTO,
   ): Promise<Result<string, string>> {
     return await this.productsService.updateProduct(id, data);
   }

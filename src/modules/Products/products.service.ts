@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ProductRepository } from './products.repository.js';
 import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
-import { IProductDTO } from './DTO/product-dto.js';
+import { IProductDTO, ProductDTO } from './DTO/product-dto.js';
 import { Result } from '../../shared/types/result.js';
 import { CategoryProductAdapter } from '../Categories/Adapter/category-product.adapter.js';
 import { ProductCollection } from './Iterator/product.collection.js';
@@ -79,7 +79,7 @@ export class ProductsService {
 
   async updateProduct(
     id: string,
-    data: ProductCreateDto,
+    data: ProductDTO,
   ): Promise<Result<string, string>> {
     try {
       const updatedProduct = await this.productsRepository.update(id, data);

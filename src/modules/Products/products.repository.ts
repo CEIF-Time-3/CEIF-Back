@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DrizzleDB } from '../../infra/db/drizzle.provider.js';
 import { products } from '../../infra/db/schema/products.schema.js';
 import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
-import { IProductDTO } from './DTO/product-dto.js';
+import { IProductDTO, ProductDTO } from './DTO/product-dto.js';
 import { eq } from 'drizzle-orm';
 
 @Injectable()
@@ -36,7 +36,7 @@ export class ProductRepository {
     return deletedProduct;
   }
 
-  async update(id: string, product: ProductCreateDto) {
+  async update(id: string, product: ProductDTO) {
     const [updatedProduct] = await this.db
       .update(products)
       .set(product)
