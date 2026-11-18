@@ -3,14 +3,13 @@ import { Injectable } from '@nestjs/common';
 import { AddressPort, NewUserAddress } from './Adapter/addressPort.js';
 import { DrizzleDB } from '../../infra/db/drizzle.provider.js';
 import { users } from '../../infra/db/schema/users.schema.js';
+import { addresses } from '../../infra/db/schema/address.schema.js';
 import { fail, ok } from '../../shared/helpers/result.helper.js';
 import { eq } from 'drizzle-orm';
 import { NewUserRow, UserWithAddresses } from './types/users.types.js';
 import { Result } from '../../shared/types/result.js';
 import { PersistUserError } from './Error/users.error.js';
 import { IUserDto } from './DTO/user-dto.js';
-import { addresses } from '../../infra/db/schema/address.schema.js';
-import { UserResponseDto } from './DTO/user-response.dto.js';
 
 @Injectable()
 export class UsersRepository {
@@ -67,5 +66,52 @@ export class UsersRepository {
       .from(users);
   }
 
-  
+  async findByEmail(email: string) {
+    const [user] = await this.db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
+    return user ?? null;
+  }
+
+  async findByIdWithAddresses(id: string) {
+    const [user] = await this.db
+      .select({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        phone: users.phone,
+        role: users.role,
+        isActive: users.isActive,
+        createdAt: users.createdAt,
+        updatedAt: users.updatedAt,
+      })
+      .from(users)
+      .where(eq(users.id, id))
+      .limit(1);
+
+    if (!user) return null;
+
+    const userAddresses = await this.db
+      .select({
+        id: addresses.id,
+        zipCode: addresses.zipCode,
+        street: addresses.street,
+        number: addresses.number,
+        complement: addresses.complement,
+        neighborhood: addresses.neighborhood,
+        city: addresses.city,
+        state: addresses.state,
+        createdAt: addresses.createdAt,
+        updatedAt: addresses.updatedAt,
+      })
+      .from(addresses)
+      .where(eq(addresses.userId, id));
+
+    return {
+      ...user,
+      addresses: userAddresses,
+    };
+  }
 }
