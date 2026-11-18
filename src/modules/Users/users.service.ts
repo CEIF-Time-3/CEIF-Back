@@ -7,6 +7,7 @@ import { AuthorizeActorError } from './Error/users.error.js';
 import { Result } from '../../shared/types/result.js';
 import { fail, ok } from '../../shared/helpers/result.helper.js';
 import { IUserDto } from './DTO/user-dto.js';
+import { UserResponseDto } from './DTO/user-response.dto.js';
 // users/users.service.ts
 @Injectable()
 export class UsersService {

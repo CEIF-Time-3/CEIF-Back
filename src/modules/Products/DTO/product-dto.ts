@@ -31,17 +31,26 @@ export class ProductDTO {
 
   @IsOptional()
   @IsString()
-  imageUrl?: string;
+  imageUrl?: string | null;
 
   @IsOptional()
   @IsString()
   @MaxLength(500)
-  description?: string;
+  description?: string | null;
 
   @IsBoolean()
   available: boolean;
 
   @IsOptional()
   @IsString()
-  ingredients?: string;
+  ingredients?: string | null;
+}
+
+export class ProductWithCategoryDTO extends ProductDTO {
+  @IsUUID()
+  categoryId: string;
+
+  @IsString()
+  @MaxLength(255)
+  categoryName: string | null;
 }

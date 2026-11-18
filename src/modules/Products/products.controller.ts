@@ -2,30 +2,11 @@ import { Controller, Get, Post, Body, Delete, Param, Put, UseGuards } from '@nes
 import { AuthGuard } from '@nestjs/passport';
 import { ProductsService } from './products.service.js';
 import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
-import { IProductDTO, ProductDTO } from './DTO/product-dto.js';
+import { IProductDTO, ProductDTO, ProductWithCategoryDTO } from './DTO/product-dto.js';
 import { Result } from '../../shared/types/result.js';
 import { Roles } from '../../common/decorators/roles.decorator.js';
 import { RolesGuard } from '../../common/guards/roles.guard.js';
 
-type product = {
-   id: string;
-  name: string;
-  price: string;
-  imageUrl: string | null;
-  description: string | null;
-  available: boolean;
-  ingredients: string | null;
-}
-
-type product = {
-   id: string;
-  name: string;
-  price: string;
-  imageUrl: string | null;
-  description: string | null;
-  available: boolean;
-  ingredients: string | null;
-}
 
 @Controller()
 export class ProductsController {
@@ -34,6 +15,11 @@ export class ProductsController {
   @Get('/products')
   async listProducts(): Promise<Result<IProductDTO[], string>> {
     return await this.productsService.getProducts();
+  }
+
+  @Get('products-with-category')
+  async listProductsWithCategory(): Promise<Result<ProductWithCategoryDTO[], string>> {
+    return await this.productsService.getProductsWithCategory();
   }
 
   @Post('/products')
