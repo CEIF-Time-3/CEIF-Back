@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { DrizzleDB } from '../../infra/db/drizzle.provider.js';
 import { products } from '../../infra/db/schema/products.schema.js';
 import { ProductCreateDto } from './DTO/products-create-validation.dto.js';
-import { IProductDTO, ProductDTO } from './DTO/product-dto.js';
+import { IProductDTO, ProductDTO, ProductWithCategoryDTO } from './DTO/product-dto.js';
 import { eq } from 'drizzle-orm';
+import { categories } from '../../infra/db/schema/categories.schema.js';
 
 @Injectable()
 export class ProductRepository {
@@ -21,6 +22,23 @@ export class ProductRepository {
         ingredients: products.ingredients,
       })
       .from(products);
+  }
+
+  async productsWithCategory(): Promise<ProductWithCategoryDTO[] | null> {
+    return await this.db
+      .select({
+        id: products.id,
+        name: products.name,
+        price: products.price,
+        imageUrl: products.imageUrl,
+        description: products.description,
+        available: products.available,
+        ingredients: products.ingredients,
+        categoryId: products.categoryId,
+        categoryName: categories.name,
+      })
+      .from(products)
+      .leftJoin(categories, eq(products.categoryId, categories.id));
   }
 
   async create(product: ProductCreateDto) {

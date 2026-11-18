@@ -58,4 +58,6 @@ export class UsersController {
     if (!result.success) throw toHttpException(USER_ERRORS, result.message);
     return result.data;
   }
+
+  
 }

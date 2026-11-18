@@ -10,6 +10,7 @@ import { NewUserRow, UserWithAddresses } from './types/users.types.js';
 import { Result } from '../../shared/types/result.js';
 import { PersistUserError } from './Error/users.error.js';
 import { IUserDto } from './DTO/user-dto.js';
+import { UserResponseDto } from './DTO/user-response.dto.js';
 
 @Injectable()
 export class UsersRepository {
