@@ -1,14 +1,23 @@
-import { pgTable, serial, text, varchar, boolean, timestamp, pgEnum,uuid } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  serial,
+  text,
+  varchar,
+  boolean,
+  timestamp,
+  pgEnum,
+  uuid,
+} from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { addresses } from './address.schema.js';
 
-export const roleEnum = pgEnum('role', ['customer', 'employee','admin']);
+export const roleEnum = pgEnum('role', ['customer', 'employee', 'admin']);
 
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
-  password: text('password').notNull(),
+  password: text('password').default('123456').notNull(),
   phone: varchar('phone', { length: 20 }).notNull(),
   role: roleEnum('role').default('customer').notNull(),
   isActive: boolean('is_active').default(true).notNull(),
