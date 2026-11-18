@@ -1,5 +1,5 @@
 {
-  "id": "a72be3d9-17c4-4406-ae8d-ad449e2f5406",
+  "id": "5d83ea5b-c587-4875-8971-5de16af6022b",
   "prevId": "5b2e7d69-3c37-4f5a-ad99-5fa8a4ec1b84",
   "version": "7",
   "dialect": "postgresql",
@@ -162,7 +162,8 @@
           "name": "password",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'123456'"
         },
         "phone": {
           "name": "phone",
